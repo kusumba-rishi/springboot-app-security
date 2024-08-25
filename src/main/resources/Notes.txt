@@ -1,0 +1,36 @@
+Servlets
+- Servlet container converts the HTTP messages into ServletRequest and hand over to Servlet method as a parameter.
+- Apache Tomcat is one of the mostly used servlet container.
+- Similarly, ServletResponse return as an output to servlet container from Servlet.
+- So everything we write inside java web apps are driven by servlets.
+
+Filters
+- Filters inside java web applications can be used to intercept each request/response and do some pre-work before our BU logic.
+- Spring security uses these same filters to enforce security based on our configuration
+
+Spring Security Internal Flow
+- Step 1
+A series of Spring Security filters intercept each request & work together to identify if Authentication is required or not.
+If authentication is required, accordingly navigate the user to login page or use the existing details stored during initial authentication.
+
+- Step 2
+Filters like UsernamePasswordAuthenticationFilter will extract username/password from HTTP request & prepare Authentication type object.
+Because Authentication is the core standard of storing authenticated user details insdie Spring Security framework.
+
+- Step 3
+Once received request from filter, it delegates the validating of the user details to the authentication providers available.
+Since there can be multiple providers inside an app, it is the responsibility of the AuthenticationManager to manage all the authentication providers available.
+In simple words, the authentication manager takes the responsibility for authentication.
+
+- Step 4
+Authentication Providers has all the core logic of validating user details for authentication.
+
+- Step 5
+UserDetailsManager/UserDetailsService helps in retrieving, creating, updating, deleting the User Details from the DB/storage service
+
+- Step 6
+Service interface that helps in encoding & hashing passwords. Otherwise we may have to live with plain text passwords
+
+- Step 7
+Once the request has been authenticated, the Authentication will usually be stored in a
+thread-local SecurityContext managed by the SecurityContextHolder. This helps during the upcoming requests from the same user.
